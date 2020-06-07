@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>テンプレート</title>
+<link href="../../_common/images/favicon.ico" rel="shortcut icon">
+<link href="https://fonts.googleapis.com/css?family=M+PLUS+1p:400,500" rel="stylesheet">
+<!-- <link href="../../_common/css/style.css" rel="stylesheet"> -->
+<link rel="stylesheet" href="/Users/iseyashouta/Documents/js-projects/7-02_api/css/special.css">
+</head>
+<body>
+<header>
+<div class="container">
+<!-- <h1>タイトル</h1>
+<h2>サブタイトル</h2> -->
+</div><!-- /.container -->
+</header>
+<main>
+<div class="container">
+<section>
+  <h3 id="place"></h3>
+  <div id="now">
+    <div id="weather">
+    </div>
+  </div>
+  <table id="forecast">
+  </table>
+    
+
+
+</section>
+</div><!-- /.container -->
+</main>
+<footer>
+<div class="container">
+<p>JavaScript Samples</p>
+</div><!-- /.container -->
+</footer>
+<script src="/Users/iseyashouta/Documents/js-projects/_common/scripts/jquery-3.4.1.min.js"></script>
+<script src="script.js"></script>
+<script>
+// geolocation 前回の復習
+function success(pos){
+  ajaxRequest(pos.coords.latitude,pos.coords.longitude);
+}
+function fail(error){
+  alert('位置情報の取得に失敗しました。エラーコード：'+ error.code);
+}
+navigator.geolocation.getCurrentPosition(success, fail);
+
+// UTCをミリ秒に
+function utcToJSTime(utcTime){
+  return utcTime * 1000;
+}
+
+// データ取得
+function ajaxRequest(lat,long){
+  const url = 'https://api.openweathermap.org/data/2.5/forecast';   // API call:の？以前のurlを定数化
+  const appId = 'b9ac4b801bd914b70f20041452d6cc19'   // 保存しておいたAPI keyを記述。定数定義
+
+  $.ajax({
+    url: url,
+    data: {
+      appid: appId,
+      lat: lat,
+      lon: long,
+      units: 'metric',
+      lang: 'ja'
+    }
+  })
+  .done(function(data){
+    console.log(data);
+
+    // 都市名、国名
+    $('#place').text(data.city.name + ',' + data.city.country);
+
+    // 天気予報データ
+    data.list.forEach(function(forecast,index){     
+      const dateTime = new Date(utcToJSTime(forecast.dt));
+      const month = dateTime.getMonth() + 1;
+      const date = dateTime.getDate();
+      const hours = dateTime.getHours();
+      const min = String(dateTime.getMinutes()).padStart(2, '0');
+      const temperture = Math.round(forecast.main.temp);
+      const description = forecast.weather[0].description;
+      const iconPath = `images/${forecast.weather[0].icon}.svg`;
+
+      if (index === 0){
+        const currentWeather = 
+        `<div class="icon"><img src="${iconPath}"></div>
+        <div class="info">
+          <p>
+            <span class="description">現在の天気：${description}</span>
+            <span class="temp">${temperture}</span>°C
+          </p>
+        </div>`;
+        $('#weather').html(currentWeather);
+      } else {
+        const tableRow =
+        `<tr>
+          <td class="info">
+            ${month}/${date} ${hours}:${min}
+          </td>
+          <td class="icon"><img src="${iconPath}"></td>
+          <td><span class="description">${description}</span></td>
+          <td><span class="temp">${temperture}°C</span></td>
+        </tr>`;
+        $('#forecast').append(tableRow);
+      }
+
+      // console.log('日時：' + `${month}/${date} ${hours}:${min}`);
+      // console.log('気温：' + temperture);
+      // console.log('天気：' + description);
+      // console.log('画像パス：' + iconPath);
+    });
+  })
+  .fail(function(){
+    console.log('$.ajax failed!');
+  })
+}
+
+</script>
+</body>
+</html>
