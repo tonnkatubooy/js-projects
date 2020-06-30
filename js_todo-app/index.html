@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>テンプレート</title>
+<link href="../../_common/images/favicon.ico" rel="shortcut icon">
+<link href="https://fonts.googleapis.com/css?family=M+PLUS+1p:400,500" rel="stylesheet">
+<link href="../../_common/css/style.css" rel="stylesheet">
+</head>
+<body>
+<header>
+<div class="container">
+<h1 id='log'></h1>
+  <input type="text" id='input'>
+    <input type="button" onclick="func1()" value="送信">
+<div id="output_message"></div>
+</div><!-- /.container -->
+</header>
+<main>
+<div class="container">
+<section>
+
+</section>
+</div><!-- /.container -->
+</main>
+<footer>
+<div class="container">
+<p>JavaScript Samples</p>
+</div><!-- /.container -->
+</footer>
+<script>
+  const date = new Date();   //これは定義しないといけないっぽい
+  const month = date.getMonth() + 1;   // 
+  const day = date.getDate();
+  const label = `${month}月${day}日`;
+
+  document.querySelector('#log').innerHTML = `今日は${label}です`;
+
+  function func1(){
+    var input_message = document.getElementById('input').value;
+    input_message = `${input_message}`;
+    document.getElementById("output_message").innerHTML = input_message;
+  }
+
+</script>
+</body>
+</html>
