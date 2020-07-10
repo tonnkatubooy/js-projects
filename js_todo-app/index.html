@@ -20,8 +20,42 @@
 <main>
 <div class="container">
 <section>
+  <div class="container">
+    <header class="text-center text-light my-4">
+        <h1 class="mb-4">Todo List</h1>
+        <form class="search">
+            <input type="text" class="form-control m-auto" name="search" placeholder="Search KeyWord">
+        </form>
+    </header>
 
+    <ul class="list-group todos mx-auto text-light">
+        <!-- javaScript でリストを追加する予定-->
+    </ul>
+
+    <form class="add text-center my-4">
+        <label class="text-light">ADDING TASK</label>
+        <input type="text" class="form-control m-auto" name="add" placeholder="New Text">
+    </form>
+</div>
 </section>
+<style>
+  body {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background: #4d639f;
+}
+
+.container {
+    max-width: 400px;
+}
+
+input[type=text],
+input[type=text]:focus {
+    color: #9abca4;
+    border: none;
+    background: rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+}
+</style>
 </div><!-- /.container -->
 </main>
 <footer>
@@ -42,6 +76,8 @@
     input_message = `${input_message}`;
     document.getElementById("output_message").innerHTML = input_message;
   }
+
+  parentDiv.insertBefore
 
 </script>
 </body>
