@@ -11,31 +11,14 @@
 <body>
 <header>
 <div class="container">
-<h1 id='log'></h1>
-  <input type="text" id='input'>
-    <input type="button" onclick="func1()" value="送信">
-<div id="output_message"></div>
-</div><!-- /.container -->
-</header>
-<main>
-<div class="container">
-<section>
-  <div class="container">
-    <header class="text-center text-light my-4">
-        <h1 class="mb-4">Todo List</h1>
-        <form class="search">
-            <input type="text" class="form-control m-auto" name="search" placeholder="Search KeyWord">
-        </form>
-    </header>
-
-    <ul class="list-group todos mx-auto text-light">
-        <!-- javaScript でリストを追加する予定-->
-    </ul>
-
-    <form class="add text-center my-4">
-        <label class="text-light">ADDING TASK</label>
-        <input type="text" class="form-control m-auto" name="add" placeholder="New Text">
-    </form>
+  <header class="header">
+    <h1 class="title">Todo List</h1>
+  </header>
+  <ul class="todo js-addTask-target"></ul>
+  <form>
+    <input class="js-addTask-value" type="text" />
+    <button class="js-addTask-trigger" type="button">タスクを登録する</button>
+  </form>
 </div>
 </section>
 <style>
@@ -60,24 +43,35 @@ input[type=text]:focus {
 </main>
 <footer>
 <div class="container">
-<p>JavaScript Samples</p>
 </div><!-- /.container -->
 </footer>
 <script>
-  const date = new Date();   //これは定義しないといけないっぽい
-  const month = date.getMonth() + 1;   // 
-  const day = date.getDate();
-  const label = `${month}月${day}日`;
+  const addTaskTrigger = document.getElementByClassName('js-addTask-trigger')[0];
+  const addTaskTarget = document.getElementsByClassName('js-addTask-target')[0];
+  const addTaskValue = document.getElementsByClassName('js-addTask-value')[0];
 
-  document.querySelector('#log').innerHTML = `今日は${label}です`;
+  const removeTask = removeButton => {
+    const targetTask = removeButton.closest('li');
+    addTaskTarget.removeChild(targetTask);
+  };
 
-  function func1(){
-    var input_message = document.getElementById('input').value;
-    input_message = `${input_message}`;
-    document.getElementById("output_message").innerHTML = input_message;
+  const addTask = task => {
+    const listItem = document.createElement('li');
   }
+  // const date = new Date();   //これは定義しないといけないっぽい
+  // const month = date.getMonth() + 1;   // 
+  // const day = date.getDate();
+  // const label = `${month}月${day}日`;
 
-  parentDiv.insertBefore
+  // document.querySelector('#log').innerHTML = `今日は${label}です`;
+
+  // function func1(){
+  //   var input_message = document.getElementById('input').value;
+  //   input_message = `${input_message}`;
+  //   document.getElementById("output_message").innerHTML = input_message;
+  // }
+
+  // parentDiv.insertBefore
 
 </script>
 </body>
